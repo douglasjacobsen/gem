@@ -6,7 +6,7 @@ message(STATUS "CMAKE_MODULE_PATH=" ${CMAKE_SOURCE_DIR}/cmake_rpn)
 include(ec_init)           # Include EC specific cmake utils
 ec_git_version()           # Get the version from the git repository
 
-project(GEM DESCRIPTION "GEM - Forecasting and data assimilation system")
+project(GEM DESCRIPTION "GEM - Forecasting and data assimilation system" LANGUAGES NONE)
 #ec_build_info()            # Generate build include file (optional)
 
 enable_language(Fortran)

@@ -3,10 +3,10 @@
 **The 5.2 branch is a development version.
 The 5.1 branch is the stable version, used in production at the Canadian
 Meteorological Centre.
-Benchmarks must be used with 5.2 version.**
+Benchmarks must be used with 5.2 version and benchmarks branch.**
 
-See below for extended instructions.  Further details are can be found in
-[GEM's manual](doc/GEM-manual.pdf) (PDF).
+See below for extended instructions and requirements. Further details are
+can be found in [GEM's manual](doc/GEM-manual.pdf) (PDF).
 
 **Warning: dev-5.2 branch uses a submodule. Make sure you follow the
 instructions below for that branch**
@@ -15,7 +15,7 @@ instructions below for that branch**
     git clone https://github.com/ECCC-ASTD-MRD/gem.git
     cd gem
     git checkout dev-5.2
-    git submodule update --init --recursive
+    git submodule update --init --remote
     # Optionnaly checkout a specific branch:
     # git checkout <branch_name>
  
@@ -35,14 +35,13 @@ instructions below for that branch**
     cd build
 
     # If the -DCMAKE_INSTALL_PREFIX=<path> option isn't given to cmake, the work directory
-    # will be created with the name work-${OS_NAME}-${COMPILER_NAME}
- 	# To compile: default compiler suite is GNU
-	cmake ..
-	# or specify it with the option -DCOMPILER_SUITE=<compiler suite name (gnu|intel)>
-	cmake -DCOMPILER_SUITE=gnu ..
-	# or compile with Intel 
-	cmake -DCOMPILER_SUITE=intel ..
-	# Create an execution environment for GEM
+    # will be created with the name work-${OS_NAME}-${COMPILER_NAME} in the main directory
+    # To compile, use the option -DCOMPILER_SUITE=<compiler suite name (gnu|intel)>
+    # with gnu suite:
+    cmake -DCOMPILER_SUITE=gnu ..
+    # or with Intel:
+    cmake -DCOMPILER_SUITE=intel ..
+    # Create an execution environment for GEM
     make -j work
 
     cd ..
@@ -60,14 +59,7 @@ instructions below for that branch**
 [SPI](http://eer.cmc.ec.gc.ca/software/SPI) can be used to view the output files.
 2D fields can also be displayed with [xrec](https://gitlab.com/gem-ec/xoas)
 
-For benchmarks, please install and compile GEM as indicated above, then
-download the following file (3 GB), and install it in the main
-directory. It includes data and configurations files, and  a file named
-README-benchmark-GY15 with details on how to run it:
-
-```
-    ./download-benchmark-GY15.sh .
-```
+For benchmarks, please see the [benchmarks branch](https://github.com/ECCC-ASTD-MRD/gem/tree/benchmarks)
 
 -----------------------------------------------------------------
 # Extended instructions:
@@ -94,7 +86,7 @@ link:
 ## Compiler specifics
 
 ### GNU compiler suite
-- By default GEM is configured to use gfortran and gcc compilers
+- By default GEM is configured to use gfortran and gcc compilers, and OpenMPI
 - Changes to the C and Fortran flags can be done in **cmake_rpn/ec_compiler_presets/default/Linux-x86_64/gnu.cmake**
 - Make sure the compilers and libraries paths are set in the appropriate
   environment variables (PATH and LD_LIBRARY_PATH).  Here are some examples
@@ -119,7 +111,9 @@ link:
     - You may need to modify ```-march``` to generate code that can run on
       your system
 - Make sure the compilers and libraries are in the appropriate
-  environment variables (PATH and LD_LIBRARY_PATH)
+  environment variables (```PATH``` and ```LD_LIBRARY_PATH```)
+- If you are using Intel OneAPI instead of OpenMPI, make sure OpenMPI is not in
+  your ```PATH``` environment variable
 
 
 ## Compiling and installing GEM
