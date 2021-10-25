@@ -17,15 +17,13 @@ do
 		NODES=$(($MPI/30))
 		RUN_DIR="${GEM_DIR}/${NPEX}x${NPEY}_${MPI}_${NODES}_run"
 
+		if [ -d ${RUN_DIR} ]; then
+			rm -rf ${RUN_DIR}
+		fi
 		cp -r $BASE_DIR $RUN_DIR
 		cd $RUN_DIR
-		cp configurations/GEM_cfgs_GY15_P/*.slurm .
-		if [ -z $JOB_ID ]; then
-			SUB_OUT=`sbatch -N $NODES mybatch.slurm $NPEX $NPEY $RUN_DIR`
-		else
-			SUB_OUT=`sbatch -N $NODES -w afterany:${JOB_ID} mybatch.slurm $NPEX $NPEY $RUN_DIR`
-		fi
+		cp ${GEM_DIR}/configurations/GEM_cfgs_GY15_P/*.slurm ${RUN_DIR}
+		SUB_OUT=`sbatch -N $NODES mybatch.slurm $NPEX $NPEY $RUN_DIR`
 		JOB_ID=`echo ${SUB_OUT} | awk '{print $4}'`
-		exit
 	done
 done
