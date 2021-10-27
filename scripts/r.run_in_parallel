@@ -268,8 +268,10 @@ mpiexec_linux_launch() {
         echo "INFO: ${mpirun} ${EXTRA_MPI_PARMS} -machinefile ${MY_NODEFILE} -n ${PeInWorld[${MpiCommWorld}]} "$@" ${ParallelScript}.${MpiCommWorld}"
 
       # TODO: DWJ - This is where mpirun happens...
+      export I_MPI_PROCESS_MANAGER=mpd
       [[ -z ${dryrun} ]] && \
-        ${mpirun} ${EXTRA_MPI_PARMS} -machinefile ${MY_NODEFILE} -n ${PeInWorld[${MpiCommWorld}]} "$@" ${ParallelScript}.${MpiCommWorld}
+        ${mpirun} ${EXTRA_MPI_PARMS} -n ${PeInWorld[${MpiCommWorld}]} "$@" ${ParallelScript}.${MpiCommWorld}
+        #${mpirun} ${EXTRA_MPI_PARMS} -machinefile ${MY_NODEFILE} -n ${PeInWorld[${MpiCommWorld}]} "$@" ${ParallelScript}.${MpiCommWorld}
 
       #[[ -z ${dryrun} ]] && \
       #    echo "  Should actually run?"
