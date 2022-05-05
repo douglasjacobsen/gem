@@ -1,10 +1,10 @@
 #!/bin/bash
 
 PPN=30
-PART="cascadelake"
+PART="c2"
 
 #PPN=56
-#PART="milan"
+#PART="c2d"
 
 NPEX_VALS=`cat uniq_npex.txt`
 NPEY_VALS=`cat uniq_npey.txt`
